@@ -25,7 +25,8 @@ export const skills = {
     'PyTorch',
     'Git',
   ],
-  learning: ['AWS', 'Terraform', 'Kubernetes', 'GitHub Actions'],
+  built: ['AWS (S3, CloudFront, Route 53, ACM, IAM)', 'Terraform', 'GitHub Actions (OIDC 배포)'],
+  learning: ['Kubernetes', 'AWS 자격증'],
 }
 
 export const paper = {

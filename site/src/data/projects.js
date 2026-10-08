@@ -3,6 +3,39 @@
 
 export const projects = [
   {
+    slug: 'portfolio',
+    name: 'Portfolio Infra',
+    summary: '이 사이트를 S3 · CloudFront · Route 53 위에 Terraform으로 구성하고 GitHub Actions로 자동 배포',
+    period: '2026.10',
+    type: '개인 프로젝트',
+    team: '1명',
+    role: '설계 · 구축 전체',
+    stack: ['Terraform', 'S3', 'CloudFront', 'Route 53', 'ACM', 'IAM OIDC', 'GitHub Actions', 'React'],
+    links: [
+      { label: '레포', url: 'https://github.com/alberione1110/portfolio' },
+      { label: '사이트', url: 'https://seokhyeonkim.com' },
+    ],
+    problem:
+      '정적 사이트를 공개 버킷 없이 안전하게 서비스하고, 장기 Access Key 없이 push만으로 배포되는 구조를 코드(IaC)로 재현 가능하게 만드는 것이 목표였습니다.',
+    flow: ['git push', 'GitHub Actions', 'OIDC → IAM 역할', 'S3 (퍼블릭 차단)', 'CloudFront (OAC · HTTPS)', 'Route 53'],
+    features: [
+      'S3 퍼블릭 접근 차단, CloudFront OAC 서명 요청만 허용 (AWS:SourceArn 조건)',
+      'ACM 인증서(us-east-1) DNS 자동 검증, HTTPS 강제와 보안 헤더 정책',
+      'SPA 라우팅: S3에 없는 경로는 CloudFront 오류 응답으로 index.html 반환',
+      'GitHub Actions OIDC + 최소 권한 역할로 빌드 → 업로드 → 캐시 무효화',
+      'Terraform state를 버전 관리·암호화된 S3에 저장, 월 예산 알림',
+    ],
+    mine: [
+      'Terraform으로 S3, CloudFront, OAC, ACM, Route 53, IAM OIDC 역할, Budgets 구성',
+      'IAM Identity Center(SSO)로 로컬 작업, 루트 계정은 MFA 후 사용 중지',
+      '배포 실패 시 CloudTrail로 거절된 토큰의 sub 클레임을 확인해 원인 파악 (GitHub 고유 ID 형식)',
+      '신뢰 정책을 와일드카드로 넓히지 않고 고유 ID 형식을 정확히 일치로 허용하도록 수정',
+    ],
+    teamWork: [],
+    metrics: null,
+    extra: null,
+  },
+  {
     slug: 'devflow',
     name: 'DevFlow',
     summary: '프로젝트·팀원·업무(Task)를 관리하는 DevOps 통합 프로젝트 관리 시스템',

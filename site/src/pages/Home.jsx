@@ -59,6 +59,12 @@ export default function Home() {
             </ul>
           </div>
           <div className="skill-row">
+            <span className="label">직접 구축</span>
+            <ul className="tags">
+              {skills.built.map((s) => <li key={s}>{s}</li>)}
+            </ul>
+          </div>
+          <div className="skill-row">
             <span className="label">학습 중</span>
             <ul className="tags outline">
               {skills.learning.map((s) => <li key={s}>{s}</li>)}
