@@ -38,12 +38,23 @@ flowchart LR
 | **S3 퍼블릭 차단 + CloudFront OAC** | 버킷을 웹 호스팅으로 공개하지 않고, 특정 CloudFront 배포에서 온 서명된 요청만 읽도록 버킷 정책을 `AWS:SourceArn`으로 제한 |
 | **ACM 인증서를 us-east-1에 생성** | CloudFront는 us-east-1의 인증서만 연결할 수 있어 provider alias로 분리. 검증은 Route 53 DNS 레코드로 자동화 |
 | **SPA 라우팅을 CloudFront 오류 응답으로 처리** | `/projects/xxx`는 S3에 파일이 없어 403이 오므로 `/index.html`을 200으로 돌려주고 React Router가 화면을 그림 |
-| **GitHub Actions OIDC** | 장기 Access Key를 Secrets에 저장하지 않음. 신뢰 정책에서 `repo:alberione1110/portfolio:ref:refs/heads/main`만 허용 |
+| **GitHub Actions OIDC** | 장기 Access Key를 Secrets에 저장하지 않음. 신뢰 정책에서 이 레포(계정·레포 고유 ID 포함)의 `main` 브랜치만 허용 |
 | **배포 역할 최소 권한** | 이 버킷의 객체 읽기·쓰기·삭제와 이 배포의 캐시 무효화만 허용 |
 | **캐시 전략 분리** | 해시가 붙은 JS·CSS는 1년 `immutable`, `index.html`은 `no-cache` + 무효화. 새 배포가 바로 보이면서 정적 파일은 엣지에 오래 남음 |
 | **Terraform state를 S3에 저장** | 버전 관리·암호화된 버킷에 저장하고, Terraform 1.10의 `use_lockfile`로 DynamoDB 없이 잠금 |
 | **인프라 변경은 로컬에서 apply** | CI에는 배포 권한만 주고, 인프라를 바꿀 수 있는 넓은 권한은 주지 않음. CI는 `fmt`·`validate`만 검사 |
 | **월 예산 알림 (AWS Budgets)** | 설정 실수로 비용이 나가는 것을 메일로 바로 확인 |
+
+## 트러블슈팅
+
+### GitHub Actions OIDC 역할 인증 실패
+- **문제**: 첫 배포에서 `Could not assume role with OIDC: Not authorized to perform sts:AssumeRoleWithWebIdentity`로 실패
+- **원인 확인**: 추측으로 정책을 넓히지 않고, AWS가 거절한 요청을 CloudTrail(`AssumeRoleWithWebIdentity` 이벤트)에서 조회해 GitHub이 실제로 보낸 토큰의 `sub` 클레임을 확인
+  - 신뢰 정책의 값: `repo:alberione1110/portfolio:ref:refs/heads/main`
+  - 실제 토큰의 값: `repo:alberione1110@<owner_id>/portfolio@<repo_id>:ref:refs/heads/main`
+  - GitHub이 계정·레포 이름 뒤에 **고유 ID를 붙이는 형식**으로 토큰을 발급하고 있었음
+- **해결**: 신뢰 정책 조건을 와일드카드로 넓히지 않고, 고유 ID 형식의 값을 **정확히 일치(StringEquals)**로 허용하도록 Terraform 수정 (`github_owner_id`, `github_repo_id` 변수)
+- **배운 점**: 인증 실패는 정책을 느슨하게 만들어 통과시키기보다, 상대가 실제로 보낸 값을 로그로 확인한 뒤 최소한으로 고쳐야 함. 고유 ID 형식은 계정·레포 이름이 재사용돼도 역할을 탈취할 수 없게 해 주므로 오히려 더 안전함
 
 ## 예상 비용
 

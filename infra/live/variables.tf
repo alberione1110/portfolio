@@ -21,6 +21,18 @@ variable "github_branch" {
   default     = "main"
 }
 
+variable "github_owner_id" {
+  description = "GitHub 계정 고유 ID (OIDC sub 클레임의 owner@ID). 공개 정보이며 비밀값 아님"
+  type        = string
+  default     = "173600350"
+}
+
+variable "github_repo_id" {
+  description = "GitHub 레포 고유 ID (OIDC sub 클레임의 repo@ID). 공개 정보이며 비밀값 아님"
+  type        = string
+  default     = "1409783409"
+}
+
 variable "create_github_oidc_provider" {
   description = "계정에 GitHub OIDC 공급자가 아직 없으면 true (계정당 1개만 존재 가능)"
   type        = bool

@@ -12,9 +12,21 @@ data "aws_iam_openid_connect_provider" "github" {
 
 locals {
   github_oidc_arn = var.create_github_oidc_provider ? aws_iam_openid_connect_provider.github[0].arn : data.aws_iam_openid_connect_provider.github[0].arn
+
+  github_owner = split("/", var.github_repo)[0]
+  github_name  = split("/", var.github_repo)[1]
+
+  # GitHub OIDC sub 클레임 허용 값
+  # - 기존 형식: repo:<owner>/<repo>:ref:refs/heads/<branch>
+  # - 고유 ID 형식: repo:<owner>@<owner_id>/<repo>@<repo_id>:ref:refs/heads/<branch>
+  #   (계정·레포 이름을 재사용해도 ID가 달라 역할을 맡을 수 없음)
+  github_subjects = compact([
+    "repo:${var.github_repo}:ref:refs/heads/${var.github_branch}",
+    var.github_owner_id != "" && var.github_repo_id != "" ? "repo:${local.github_owner}@${var.github_owner_id}/${local.github_name}@${var.github_repo_id}:ref:refs/heads/${var.github_branch}" : "",
+  ])
 }
 
-# 지정한 레포의 지정한 브랜치에서 실행된 워크플로만 이 역할을 맡을 수 있음
+# 지정한 레포(고유 ID 포함)의 지정한 브랜치에서 실행된 워크플로만 이 역할을 맡을 수 있음
 data "aws_iam_policy_document" "deploy_trust" {
   statement {
     actions = ["sts:AssumeRoleWithWebIdentity"]
@@ -33,7 +45,7 @@ data "aws_iam_policy_document" "deploy_trust" {
     condition {
       test     = "StringEquals"
       variable = "token.actions.githubusercontent.com:sub"
-      values   = ["repo:${var.github_repo}:ref:refs/heads/${var.github_branch}"]
+      values   = local.github_subjects
     }
   }
 }
