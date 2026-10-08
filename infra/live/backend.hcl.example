@@ -1,0 +1,2 @@
+# backend.hcl 로 복사 → bootstrap 출력값(state_bucket) 입력
+bucket = "portfolio-tfstate-<AWS 계정 ID>"

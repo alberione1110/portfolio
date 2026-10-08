@@ -1,0 +1,5 @@
+# terraform.tfvars 로 복사해서 값 입력 (terraform.tfvars 는 커밋하지 않음)
+domain_name        = "example.com"
+budget_alert_email = "you@example.com"
+# 계정에 GitHub OIDC 공급자가 이미 있으면 false
+create_github_oidc_provider = true
