@@ -1,9 +1,22 @@
+// 번호(no)는 이력서·포트폴리오 문서의 P1~P6와 같습니다.
 // 프로젝트 데이터: 각 레포 README에서 확인된 사실만 담습니다.
 // mine = 내가 한 일, team = 팀원이 한 일 (반드시 분리)
 
-export const projects = [
+const allProjects = [
   {
     slug: 'portfolio',
+    no: 6,
+    diagrams: [{ src: '/diagrams/infra_arch.png', caption: '서비스 경로와 배포 파이프라인' }],
+    troubleshooting: {
+      title: 'GitHub Actions OIDC 인증 실패',
+      diagram: { src: '/diagrams/oidc_ts.png', caption: '원인 추적 과정' },
+      rows: [
+        ['문제', '첫 배포가 sts:AssumeRoleWithWebIdentity 권한 오류로 실패했습니다.'],
+        ['원인 확인', '정책을 넓히지 않고 CloudTrail에서 거절된 요청을 조회해 GitHub이 실제로 보낸 토큰의 sub 값을 확인했습니다. 신뢰 정책은 repo:<계정>/<레포> 형식을 기다렸지만 실제 토큰은 이름 뒤에 고유 ID가 붙은 형식이었습니다.'],
+        ['해결', '와일드카드 대신 고유 ID 형식을 정확히 일치하도록 Terraform을 수정해 재배포에 성공했습니다.'],
+        ['배운 점', '인증 오류는 정책을 느슨하게 하지 않고 로그로 실제 값을 확인해 필요한 만큼만 고칩니다. 고유 ID 형식은 계정·레포 이름이 재사용돼도 역할을 쓸 수 없어 오히려 더 안전합니다.'],
+      ],
+    },
     name: 'Portfolio Infra',
     summary: '이 사이트를 S3 · CloudFront · Route 53 위에 Terraform으로 구성하고 GitHub Actions로 자동 배포',
     period: '2026.10',
@@ -37,6 +50,8 @@ export const projects = [
   },
   {
     slug: 'devflow',
+    no: 1,
+    diagrams: [{ src: '/diagrams/devflow_arch_team.png', caption: '팀 공동 아키텍처 (2차 MVP) — EKS · ALB · RDS · GitLab CI/CD · Prometheus/Grafana는 인프라 팀원 설계' },{ src: '/diagrams/devflow_flow.png', caption: '내가 구현한 백엔드 요청 흐름과 인프라 연결 지점' },{ src: '/diagrams/devflow_erd.png', caption: '데이터 모델과 권한 규칙' }],
     name: 'DevFlow',
     summary: '프로젝트·팀원·업무(Task)를 관리하는 DevOps 통합 프로젝트 관리 시스템',
     period: '2026.08 (2차) · 2026.10 ~ 2026.11 (3차 고도화)',
@@ -79,6 +94,18 @@ export const projects = [
   },
   {
     slug: 'hearing-assistant',
+    no: 2,
+    diagrams: [{ src: '/diagrams/hearing_pipeline.png', caption: '엣지 AI 파이프라인(Raspberry Pi)과 클라우드 백엔드 분리' }],
+    troubleshooting: {
+      title: '추론 루프가 연결 처리를 막던 문제',
+      diagram: { src: '/diagrams/hearing_ts.png', caption: '추론/연결 처리 분리 전후' },
+      rows: [
+        ['문제', '단일 스크립트로 검증한 추론 코드를 WebSocket 서버로 감싸자, 추론 루프가 서버와 같은 흐름에서 돌아 앱의 시작·중지 요청과 결과 전송이 막혔습니다.'],
+        ['원인', 'CPU를 쓰는 추론이 이벤트 루프를 점유했습니다.'],
+        ['해결', '추론을 별도 스레드로 분리하고 결과를 큐로 전달했습니다. 라즈베리파이 자원 한도에 맞춰 서버와 모델을 경량화했습니다.'],
+        ['배운 점', '엣지에서는 기능 추가보다 경량화·안정성이 먼저이고, 실시간 처리(엣지)와 데이터 저장(클라우드)은 서비스 단위로 나눠야 합니다.'],
+      ],
+    },
     name: 'Hearing Assistant',
     summary: '소리의 종류와 방향을 실시간으로 판별해 알려주는 청각장애인 생활 보조 시스템',
     period: '2026.03 ~ 2026.06',
@@ -120,10 +147,12 @@ export const projects = [
   },
   {
     slug: 'kseb',
+    no: 4,
+    diagrams: [{ src: '/diagrams/kseb_arch.png', caption: '사용자 흐름과 풀스택 구성' }],
     name: 'KSEB_Proj',
     summary: '서울 상권 데이터 기반 창업 업종 · 입지 추천 웹 서비스',
     period: '2025.06 ~ 2025.08',
-    type: '교내 부트캠프',
+    type: 'KSEB 부트캠프',
     team: '4명',
     role: '팀장 · 풀스택 (Frontend + Backend)',
     stack: ['React', 'Axios', 'ECharts', 'Flask', 'Python', 'MySQL'],
@@ -148,6 +177,8 @@ export const projects = [
   },
   {
     slug: 'visgap',
+    no: 3,
+    diagrams: [{ src: '/diagrams/visgap_pipeline.png', caption: '파이프라인과 검증 지표 (검증셋 39장 기준)' }],
     name: 'VisGAP',
     summary: 'YOLOv8 기반 스마트폰 후면 카메라 미세 부품 간격(gap) 자동 측정',
     period: '2025.03 ~ 2025.06',
@@ -184,12 +215,14 @@ export const projects = [
   },
   {
     slug: 'rsna',
+    research: true,
+    diagrams: [],
     name: 'RSNA',
     summary: '암호화된 흉부 X-ray로도 폐렴 분류가 가능한지 비교한 프라이버시 보존 실험',
     period: '2025.09',
-    type: '개인 실험',
+    type: '연구실 연구',
     team: '1명',
-    role: '실험 설계 · 구현 · 평가 전체',
+    role: '실험 설계 · 구현 · 평가 전체 (학부연구생)',
     stack: ['PyTorch', 'ResNet18', 'scikit-learn', 'pydicom', 'Grad-CAM'],
     links: [{ label: '레포', url: 'https://github.com/alberione1110/RSNA' }],
     problem:
@@ -219,10 +252,12 @@ export const projects = [
   },
   {
     slug: 'reconnect',
+    no: 5,
+    diagrams: [{ src: '/diagrams/reconnect_flow.png', caption: '사용자 흐름과 구성' }],
     name: 'ReConnect',
     summary: '연인과 함께 쓰는 감정 다이어리 서비스의 웹 프론트엔드',
     period: '2025.09 ~ 2025.12',
-    type: '교내 상상기업',
+    type: '교내 상상기업 · 약 4개월 장기 프로젝트',
     team: '4명',
     role: '웹 프론트엔드 전담',
     stack: ['React 19', 'React Router', 'Axios'],
@@ -245,4 +280,6 @@ export const projects = [
   },
 ]
 
-export const getProject = (slug) => projects.find((p) => p.slug === slug)
+export const projects = allProjects.filter((p) => !p.research).sort((a, b) => a.no - b.no)
+export const research = allProjects.filter((p) => p.research)
+export const getProject = (slug) => allProjects.find((p) => p.slug === slug)

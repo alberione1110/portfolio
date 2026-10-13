@@ -9,6 +9,7 @@ export default function Layout() {
       <header className="topbar">
         <Link to="/" className="brand">{profile.name}</Link>
         <nav className="nav">
+          <Link to="/#experience">Experience</Link>
           <Link to="/#projects">Projects</Link>
           <Link to="/#skills">Skills</Link>
           <Link to="/#contact">Contact</Link>

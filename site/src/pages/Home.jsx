@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom'
-import { profile, skills, paper, certificates } from '../data/profile.js'
-import { projects } from '../data/projects.js'
+import { profile, skills, paper, certificates, experience } from '../data/profile.js'
+import { projects, research } from '../data/projects.js'
 
 export default function Home() {
   return (
@@ -24,13 +24,32 @@ export default function Home() {
         </div>
       </section>
 
+      <section id="experience" className="section">
+        <h2 className="section-title">Experience</h2>
+        <div className="exp-list">
+          {experience.map((e) => (
+            <div key={e.title} className="exp">
+              <p className="exp-period">{e.period}</p>
+              <div>
+                <h3>{e.title}</h3>
+                <p className="exp-role">{e.role}</p>
+                <ul className="bullets">
+                  {e.points.map((pt) => <li key={pt}>{pt}</li>)}
+                </ul>
+                {e.ref && <Link to={`/projects/${e.ref}`} className="more">관련 프로젝트 보기 →</Link>}
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+
       <section id="projects" className="section">
         <h2 className="section-title">Projects</h2>
         <div className="project-list">
           {projects.map((p) => (
             <Link key={p.slug} to={`/projects/${p.slug}`} className="project-card">
               <div className="card-head">
-                <h3>{p.name}</h3>
+                <h3><span className="pno">P{p.no}</span>{p.name}</h3>
                 <span className="period">{p.period}</span>
               </div>
               <p className="summary">{p.summary}</p>
@@ -43,6 +62,23 @@ export default function Home() {
                   <li key={s}>{s}</li>
                 ))}
               </ul>
+              <span className="more">자세히 보기 →</span>
+            </Link>
+          ))}
+        </div>
+      </section>
+
+      <section id="research" className="section">
+        <h2 className="section-title">Research</h2>
+        <div className="project-list">
+          {research.map((p) => (
+            <Link key={p.slug} to={`/projects/${p.slug}`} className="project-card">
+              <div className="card-head">
+                <h3>{p.name}</h3>
+                <span className="period">{p.period}</span>
+              </div>
+              <p className="summary">{p.summary}</p>
+              <p className="meta"><span>{p.type}</span><span>{p.role}</span></p>
               <span className="more">자세히 보기 →</span>
             </Link>
           ))}
@@ -65,9 +101,9 @@ export default function Home() {
             </ul>
           </div>
           <div className="skill-row">
-            <span className="label">학습 중</span>
+            <span className="label">팀 협업으로 이해</span>
             <ul className="tags outline">
-              {skills.learning.map((s) => <li key={s}>{s}</li>)}
+              {skills.collab.map((s) => <li key={s}>{s}</li>)}
             </ul>
           </div>
         </div>
@@ -78,6 +114,7 @@ export default function Home() {
           <h2 className="section-title">Paper</h2>
           <p className="paper-title">「{paper.title}」</p>
           <p className="muted">{paper.venue}, {paper.year} · {paper.note}</p>
+          <Link to="/projects/hearing-assistant" className="more">관련 프로젝트 (P2) →</Link>
         </div>
         <div>
           <h2 className="section-title">Certificates</h2>

@@ -8,14 +8,14 @@ export default function ProjectDetail() {
   if (!p) return <NotFound />
 
   const idx = projects.findIndex((x) => x.slug === slug)
-  const next = projects[(idx + 1) % projects.length]
+  const next = idx >= 0 ? projects[(idx + 1) % projects.length] : projects[0]
 
   return (
     <article className="detail">
       <Link to="/#projects" className="back">← 프로젝트 목록</Link>
 
       <header className="detail-head">
-        <h1>{p.name}</h1>
+        <h1>{p.no && <span className="pno big">P{p.no}</span>}{p.name}</h1>
         <p className="lead">{p.summary}</p>
         <dl className="facts">
           <div><dt>기간</dt><dd>{p.period}</dd></div>
@@ -39,6 +39,14 @@ export default function ProjectDetail() {
 
       <section className="block">
         <h2>구조</h2>
+        {p.diagrams?.length > 0 ? (
+          p.diagrams.map((g) => (
+            <figure key={g.src} className="figure">
+              <img src={g.src} alt={g.caption} loading="lazy" />
+              <figcaption>{g.caption}</figcaption>
+            </figure>
+          ))
+        ) : (
         <ol className="flow">
           {p.flow.map((step, i) => (
             <li key={step}>
@@ -47,6 +55,7 @@ export default function ProjectDetail() {
             </li>
           ))}
         </ol>
+        )}
       </section>
 
       <section className="block">
@@ -87,6 +96,23 @@ export default function ProjectDetail() {
           </div>
         )}
       </section>
+
+      {p.troubleshooting && (
+        <section className="block">
+          <h2>트러블슈팅 — {p.troubleshooting.title}</h2>
+          {p.troubleshooting.diagram && (
+            <figure className="figure">
+              <img src={p.troubleshooting.diagram.src} alt={p.troubleshooting.diagram.caption} loading="lazy" />
+              <figcaption>{p.troubleshooting.diagram.caption}</figcaption>
+            </figure>
+          )}
+          <dl className="ts">
+            {p.troubleshooting.rows.map(([k, v]) => (
+              <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+            ))}
+          </dl>
+        </section>
+      )}
 
       {p.extra && (
         <section className="block callout">

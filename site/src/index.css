@@ -292,3 +292,54 @@ a:hover { text-decoration: underline; }
   .facts, .metrics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .card-head { flex-direction: column; gap: 0; }
 }
+
+/* ---------- 문서와 맞춘 추가 요소 ---------- */
+.pno {
+  display: inline-block;
+  margin-right: 8px;
+  padding: 0 8px;
+  border-radius: 6px;
+  background: var(--accent-soft);
+  color: var(--accent);
+  font-size: 0.7em;
+  font-weight: 700;
+  vertical-align: 2px;
+}
+.pno.big { font-size: 0.4em; margin-right: 12px; vertical-align: 10px; }
+
+.exp-list { display: grid; gap: 18px; }
+.exp {
+  display: grid;
+  grid-template-columns: 190px 1fr;
+  gap: 20px;
+  padding: 20px 22px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+.exp h3 { margin: 0; font-size: 17px; }
+.exp-period { margin: 0; color: var(--muted); font-size: 14px; }
+.exp-role { margin: 2px 0 8px; color: var(--ink-soft); font-size: 14px; }
+.exp .bullets { margin: 0 0 8px; }
+
+.figure { margin: 0 0 20px; }
+.figure img {
+  display: block;
+  width: 100%;
+  height: auto;
+  padding: 10px;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+.figure figcaption { margin-top: 6px; font-size: 13px; color: var(--muted); text-align: center; }
+
+.ts { margin: 0; display: grid; gap: 10px; }
+.ts > div { display: grid; grid-template-columns: 84px 1fr; gap: 14px; }
+.ts dt { font-weight: 700; color: var(--accent); }
+.ts dd { margin: 0; color: var(--ink-soft); }
+
+@media (max-width: 720px) {
+  .exp { grid-template-columns: 1fr; gap: 6px; }
+  .ts > div { grid-template-columns: 1fr; gap: 2px; }
+}
