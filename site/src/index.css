@@ -362,3 +362,18 @@ a:hover { text-decoration: underline; }
 }
 .gh-btn:hover { text-decoration: none; opacity: 0.88; }
 .gh-btn svg { width: 18px; height: 18px; fill: currentColor; }
+
+/* ---------- portrait / strengths / multi troubleshooting ---------- */
+.hero-grid { display: grid; grid-template-columns: 1fr 180px; gap: 40px; align-items: center; }
+.portrait { width: 180px; height: auto; aspect-ratio: 233 / 300; object-fit: cover; border-radius: var(--radius); border: 1px solid var(--line); background: var(--surface); }
+.strengths { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+.strength { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 18px 18px 16px; }
+.strength h3 { margin: 0 0 8px; font-size: 1rem; color: var(--accent); }
+.strength p { margin: 0; color: var(--ink-soft); font-size: 0.95rem; line-height: 1.65; }
+.ts-block + .ts-block { margin-top: 26px; }
+.ts-title { margin: 0 0 10px; font-size: 1rem; color: var(--ink); }
+@media (max-width: 720px) {
+  .hero-grid { grid-template-columns: 1fr; gap: 24px; }
+  .portrait { order: -1; width: 128px; }
+  .strengths { grid-template-columns: 1fr; }
+}

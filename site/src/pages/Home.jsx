@@ -1,26 +1,43 @@
 import { Link } from 'react-router-dom'
-import { profile, skills, paper, certificates, experience } from '../data/profile.js'
+import { profile, skills, paper, certificates, experience, strengths } from '../data/profile.js'
 import { projects, research } from '../data/projects.js'
 
 export default function Home() {
   return (
     <>
       <section className="hero">
-        <p className="eyebrow">{profile.title}</p>
-        <h1>{profile.name}</h1>
-        <p className="lead">{profile.tagline}</p>
-        <ul className="intro">
-          {profile.intro.map((line) => (
-            <li key={line}>{line}</li>
+        <div className="hero-grid">
+          <div className="hero-text">
+            <p className="eyebrow">{profile.title}</p>
+            <h1>{profile.name}</h1>
+            <p className="lead">{profile.tagline}</p>
+            <ul className="intro">
+              {profile.intro.map((line) => (
+                <li key={line}>{line}</li>
+              ))}
+            </ul>
+            <p className="interests">
+              <span className="label">관심 분야</span>
+              {profile.interests.join(' · ')}
+            </p>
+            <div className="actions">
+              <a className="btn" href={`mailto:${profile.email}`}>Email</a>
+              <a className="btn ghost" href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
+            </div>
+          </div>
+          <img className="portrait" src={profile.photo} alt={`${profile.name} 프로필 사진`} width="180" height="232" />
+        </div>
+      </section>
+
+      <section id="about" className="section">
+        <h2 className="section-title">Strengths</h2>
+        <div className="strengths">
+          {strengths.map((s) => (
+            <div key={s.title} className="strength">
+              <h3>{s.title}</h3>
+              <p>{s.body}</p>
+            </div>
           ))}
-        </ul>
-        <p className="interests">
-          <span className="label">관심 분야</span>
-          {profile.interests.join(' · ')}
-        </p>
-        <div className="actions">
-          <a className="btn" href={`mailto:${profile.email}`}>Email</a>
-          <a className="btn ghost" href={profile.github} target="_blank" rel="noreferrer">GitHub</a>
         </div>
       </section>
 

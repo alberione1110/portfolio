@@ -100,20 +100,25 @@ export default function ProjectDetail() {
         )}
       </section>
 
-      {p.troubleshooting && (
+      {p.troubleshootings?.length > 0 && (
         <section className="block">
-          <h2>트러블슈팅 — {p.troubleshooting.title}</h2>
-          {p.troubleshooting.diagram && (
-            <figure className="figure">
-              <img src={p.troubleshooting.diagram.src} alt={p.troubleshooting.diagram.caption} loading="lazy" />
-              <figcaption>{p.troubleshooting.diagram.caption}</figcaption>
-            </figure>
-          )}
-          <dl className="ts">
-            {p.troubleshooting.rows.map(([k, v]) => (
-              <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
-            ))}
-          </dl>
+          <h2>트러블슈팅</h2>
+          {p.troubleshootings.map((t) => (
+            <div key={t.title} className="ts-block">
+              <h3 className="ts-title">{t.title}</h3>
+              {t.diagram && (
+                <figure className="figure">
+                  <img src={t.diagram.src} alt={t.diagram.caption} loading="lazy" />
+                  <figcaption>{t.diagram.caption}</figcaption>
+                </figure>
+              )}
+              <dl className="ts">
+                {t.rows.map(([k, v]) => (
+                  <div key={k}><dt>{k}</dt><dd>{v}</dd></div>
+                ))}
+              </dl>
+            </div>
+          ))}
         </section>
       )}
 
