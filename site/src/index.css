@@ -343,3 +343,22 @@ a:hover { text-decoration: underline; }
   .exp { grid-template-columns: 1fr; gap: 6px; }
   .ts > div { grid-template-columns: 1fr; gap: 2px; }
 }
+
+/* 프로젝트 상세: 제목 줄과 GitHub 버튼 */
+.title-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.title-row h1 { margin: 0; }
+.gh-links { display: flex; gap: 8px; flex-wrap: wrap; }
+.gh-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 16px;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--bg);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+.gh-btn:hover { text-decoration: none; opacity: 0.88; }
+.gh-btn svg { width: 18px; height: 18px; fill: currentColor; }

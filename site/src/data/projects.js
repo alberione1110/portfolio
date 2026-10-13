@@ -25,8 +25,7 @@ const allProjects = [
     role: '설계 · 구축 전체',
     stack: ['Terraform', 'S3', 'CloudFront', 'Route 53', 'ACM', 'IAM OIDC', 'GitHub Actions', 'React'],
     links: [
-      { label: '레포', url: 'https://github.com/alberione1110/portfolio' },
-      { label: '사이트', url: 'https://seokhyeonkim.com' },
+      { label: 'GitHub', url: 'https://github.com/alberione1110/portfolio' },
     ],
     problem:
       '정적 사이트를 공개 버킷 없이 안전하게 서비스하고, 장기 Access Key 없이 push만으로 배포되는 구조를 코드(IaC)로 재현 가능하게 만드는 것이 목표였습니다.',
@@ -60,8 +59,8 @@ const allProjects = [
     role: '팀장 · Backend 전담',
     stack: ['Java 21', 'Spring Boot', 'Spring Security', 'JWT', 'JPA', 'PostgreSQL', 'Docker', 'Swagger'],
     links: [
-      { label: '2차 레포', url: 'https://github.com/Team-likelion-2nd-Project/likelion-devops-7th-team02' },
-      { label: '3차 레포', url: 'https://github.com/Team-likelion-3rd-Project/likelion-devops-7th-3rd-team02' },
+      { label: '2차', url: 'https://github.com/Team-likelion-2nd-Project/likelion-devops-7th-team02' },
+      { label: '3차', url: 'https://github.com/Team-likelion-3rd-Project/likelion-devops-7th-3rd-team02' },
     ],
     problem:
       '업무 관리 서비스를 만드는 데서 끝내지 않고, 그 서비스가 빌드·배포·모니터링되는 DevOps 흐름까지 하나의 프로젝트로 연결하는 것이 목표였습니다.',
@@ -114,8 +113,8 @@ const allProjects = [
     role: '팀장 · 서버 구조 설계 · 배포 · 엣지 AI 서버',
     stack: ['Python', 'FastAPI', 'PostgreSQL', 'Alembic', 'Docker Compose', 'WebSocket', 'PyTorch', 'Raspberry Pi'],
     links: [
-      { label: '백엔드 레포', url: 'https://github.com/alberione1110/hearing-assistant' },
-      { label: 'AI 서버 레포', url: 'https://github.com/alberione1110/deafassist_ai_server' },
+      { label: '백엔드', url: 'https://github.com/alberione1110/hearing-assistant' },
+      { label: 'AI 서버', url: 'https://github.com/alberione1110/deafassist_ai_server' },
     ],
     problem:
       '주변의 위험 소리를 놓치기 쉬운 청각장애인을 위해, 엣지 디바이스가 소리를 분류하고 방향을 추정해 모바일·AR 글래스·워치로 알려줍니다.',
@@ -156,7 +155,7 @@ const allProjects = [
     team: '4명',
     role: '팀장 · 풀스택 (Frontend + Backend)',
     stack: ['React', 'Axios', 'ECharts', 'Flask', 'Python', 'MySQL'],
-    links: [{ label: '레포', url: 'https://github.com/alberione1110/KSEB_Proj' }],
+    links: [{ label: 'GitHub', url: 'https://github.com/alberione1110/KSEB_Proj' }],
     problem:
       '예비 창업자가 지역을 고르면 유망 업종을, 업종을 고르면 유망 지역을 추천받고, 매출·인구 지표를 차트와 AI 상담으로 확인합니다.',
     flow: ['React', 'REST /api', 'Flask Blueprint', 'AI 모듈 (팀원)', 'MySQL'],
@@ -186,7 +185,7 @@ const allProjects = [
     team: '5명',
     role: '팀장 · AI',
     stack: ['YOLOv8', 'PyTorch', 'OpenCV', 'FastAPI', 'React', 'Vite'],
-    links: [{ label: '레포', url: 'https://github.com/alberione1110/VisGAP' }],
+    links: [{ label: 'GitHub', url: 'https://github.com/alberione1110/VisGAP' }],
     problem:
       '사람이 눈으로 확인하던 부품 간격 검사를, 이미지를 올리면 frame · magnetic · gap을 검출하고 gap 높이(px)를 자동으로 측정하도록 바꿨습니다.',
     flow: ['React', 'FastAPI 업로드 API', 'YOLOv8m 검출', 'OpenCV 후처리', '결과 이미지 · gap 값'],
@@ -224,7 +223,7 @@ const allProjects = [
     team: '1명',
     role: '실험 설계 · 구현 · 평가 전체 (학부연구생)',
     stack: ['PyTorch', 'ResNet18', 'scikit-learn', 'pydicom', 'Grad-CAM'],
-    links: [{ label: '레포', url: 'https://github.com/alberione1110/RSNA' }],
+    links: [{ label: 'GitHub', url: 'https://github.com/alberione1110/RSNA' }],
     problem:
       '의료 영상을 원본 그대로 학습에 쓰면 개인정보 노출 위험이 있습니다. 이미지를 암호화·변형한 상태에서 분류 성능이 얼마나 유지되는지 6가지 조건으로 비교했습니다.',
     flow: ['DICOM (VOI LUT)', '암호화·변형 6조건', 'ResNet18 학습', 'AUC · AP 평가', 'Grad-CAM'],
@@ -261,7 +260,7 @@ const allProjects = [
     team: '4명',
     role: '웹 프론트엔드 전담',
     stack: ['React 19', 'React Router', 'Axios'],
-    links: [{ label: '레포', url: 'https://github.com/alberione1110/ReConnect' }],
+    links: [{ label: 'GitHub', url: 'https://github.com/alberione1110/ReConnect' }],
     problem:
       '연인이 같은 질문에 각자 답하고 서로의 답변을 확인하며, 답변을 바탕으로 한 관계 분석 리포트를 보는 서비스입니다.',
     flow: ['React Web', 'services 계층 (Axios)', 'Backend API (팀원)'],
