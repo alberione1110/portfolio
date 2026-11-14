@@ -2,12 +2,12 @@
 export const profile = {
   name: '김석현',
   title: 'Cloud Engineer / MLOps · Backend Developer',
-  tagline: '백엔드를 직접 구현하고 인프라를 코드로 구축해, 서비스와 AI 모델을 운영 가능한 상태로 배포하는 엔지니어입니다.',
+  tagline: '맡은 일은 끝까지, 모르는 건 배우는 개발자입니다.',
   intro: [
     '경기대학교 컴퓨터공학과 (2027.02 졸업예정) · 학부연구생 1년 (AI/ML/DL)',
-    '멋쟁이사자처럼 클라우드 엔지니어링 부트캠프 (2026.11 수료예정)',
-    '팀장으로 파트 사이의 소통 구조를 정리하며 프론트엔드, 백엔드 API, AI(비전·사운드), 엣지 서버, 클라우드 배포를 두루 경험했습니다.',
-    '부트캠프 3차 프로젝트에서 팀장·백엔드를 유지하며 인프라 파트에도 참여합니다.',
+    '멋쟁이사자처럼 클라우드 엔지니어링 부트캠프 (2026.11.13 수료)',
+    '백엔드, AI, 프론트엔드, 인프라까지 여섯 개 프로젝트를 거치며 필요한 기술은 그때그때 배워서 썼고, 네 번은 팀장을 맡아 프로젝트의 흐름을 조율했습니다.',
+    '부트캠프 3차 프로젝트(DevFlow)에서 팀장·백엔드를 유지하며 연동 계층 구현과 온프렘·AWS 배포 검증에 참여했습니다.',
   ],
   interests: ['클라우드 인프라', 'MLOps', '백엔드 (Java Spring Boot, Python FastAPI)'],
   photo: '/profile.jpg',
@@ -46,19 +46,20 @@ export const skills = {
     'C / C++ (강의 · 정보올림피아드 지도)',
   ],
   built: ['AWS (S3, CloudFront, Route 53, ACM, IAM)', 'Terraform', 'GitHub Actions (OIDC 배포)'],
-  collab: ['Amazon EKS · VPC · RDS', 'Kubernetes', 'GitLab CI/CD', 'Prometheus · Grafana'],
+  collab: ['Amazon EKS · RDS', 'Kubernetes · Helm', 'Argo CD', 'GitLab CI/CD', 'Prometheus · Grafana'],
 }
 
 // 경력 및 활동 (이력서와 같은 내용)
 export const experience = [
   {
-    period: '2026.06 ~ 2026.11 (수료예정)',
+    period: '2026.06 ~ 2026.11.13 (수료)',
     title: '멋쟁이사자처럼 클라우드 엔지니어링 부트캠프',
     role: '프로젝트 팀장 / 실습 팀장',
     points: [
       '4인 팀(Backend · Frontend · AWS/K8s · CI/CD·모니터링)의 일정과 역할을 조율하고 2차 프로젝트를 3차 고도화로 이어서 진행했습니다.',
       '백엔드 REST API 13개를 단독 구현하고, 인프라 팀원이 바로 연결할 수 있도록 Probe·Metrics 엔드포인트를 먼저 제공했습니다.',
-      '인프라 파트가 올리는 PR을 직접 리뷰·논의하며 운영에 기여했고, 3차 프로젝트에서는 인프라 파트로도 참여합니다(확정).',
+      '3차에서 API를 50개로 확장하고 CI/CD·Kubernetes·Prometheus·AWS 상태를 보여주는 연동 계층을 구현했으며, 온프렘·AWS(EKS) 배포 검증에도 참여했습니다(팀 PR 55건 중 21건).',
+      '인프라 파트가 올리는 PR을 직접 리뷰·논의하며 운영에 기여했습니다.',
     ],
     ref: 'devflow',
   },
@@ -84,12 +85,24 @@ export const experience = [
   },
 ]
 
-export const paper = {
-  title: '실시간 소리 인식 및 방향 추정을 활용한 청각장애인 생활 보조 시스템 설계 및 구현',
-  venue: '한국정보기술학회',
-  year: 2026,
-  note: '공동 1저자',
-}
+export const papers = [
+  {
+    title: '실시간 소리 인식 및 방향 추정을 활용한 청각장애인 생활 보조 시스템 설계 및 구현',
+    venue: '한국정보기술학회',
+    year: 2026,
+    note: '공동 1저자',
+    ref: 'hearing-assistant',
+    refLabel: 'P2',
+  },
+  {
+    title: '비전 기반 부품 세그멘테이션 및 GAP 측정 시스템',
+    venue: '한국데이터사이언스학회 춘계 종합학술대회 논문집 게재',
+    year: 2025,
+    note: '제1저자',
+    ref: 'visgap',
+    refLabel: 'P3',
+  },
+]
 
 export const certificates = [
   { name: 'SW테스트전문가 (CSTS)', status: '취득', date: '2025.05.10' },
