@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom'
-import { profile, skills, paper, certificates, experience, strengths } from '../data/profile.js'
+import { profile, skills, papers, certificates, experience, strengths } from '../data/profile.js'
 import { projects, research } from '../data/projects.js'
 
 export default function Home() {
@@ -128,10 +128,14 @@ export default function Home() {
 
       <section className="section two-col">
         <div>
-          <h2 className="section-title">Paper</h2>
-          <p className="paper-title">「{paper.title}」</p>
-          <p className="muted">{paper.venue}, {paper.year} · {paper.note}</p>
-          <Link to="/projects/hearing-assistant" className="more">관련 프로젝트 (P2) →</Link>
+          <h2 className="section-title">Papers</h2>
+          {papers.map((pp) => (
+            <div key={pp.title} style={{ marginBottom: 18 }}>
+              <p className="paper-title">「{pp.title}」</p>
+              <p className="muted">{pp.venue}, {pp.year} · {pp.note}</p>
+              <Link to={`/projects/${pp.ref}`} className="more">관련 프로젝트 ({pp.refLabel}) →</Link>
+            </div>
+          ))}
         </div>
         <div>
           <h2 className="section-title">Certificates</h2>
