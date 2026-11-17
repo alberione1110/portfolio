@@ -6,7 +6,7 @@ export const profile = {
   intro: [
     '경기대학교 컴퓨터공학과 (2027.02 졸업예정) · 학부연구생 1년 (AI/ML/DL)',
     '멋쟁이사자처럼 클라우드 엔지니어링 부트캠프 (2026.11.13 수료)',
-    '백엔드, AI, 프론트엔드, 인프라까지 여섯 개 프로젝트를 거치며 필요한 기술은 그때그때 배워서 썼고, 네 번은 팀장을 맡아 프로젝트의 흐름을 조율했습니다.',
+    '백엔드, AI, 프론트엔드, 인프라까지 여섯 개 프로젝트를 거치며 필요한 기술은 그때그때 배워서 썼습니다. 네 번 팀장을 맡아 파트 사이의 API 명세와 데이터 규격을 직접 맞추고 일정을 조율했습니다.',
     '부트캠프 3차 프로젝트(DevFlow)에서 팀장·백엔드를 유지하며 연동 계층 구현과 온프렘·AWS 배포 검증에 참여했습니다.',
   ],
   interests: ['클라우드 인프라', 'MLOps', '백엔드 (Java Spring Boot, Python FastAPI)'],
@@ -39,9 +39,10 @@ export const skills = {
     'Python (FastAPI, Flask)',
     'PostgreSQL',
     'MySQL',
+    'Redis',
     'JavaScript (React)',
     'Docker / Docker Compose',
-    'PyTorch · YOLOv8',
+    'PyTorch · YOLOv8 · Wav2Vec2',
     'Git',
     'C / C++ (강의 · 정보올림피아드 지도)',
   ],
@@ -57,9 +58,11 @@ export const experience = [
     role: '프로젝트 팀장 / 실습 팀장',
     points: [
       '4인 팀(Backend · Frontend · AWS/K8s · CI/CD·모니터링)의 일정과 역할을 조율하고 2차 프로젝트를 3차 고도화로 이어서 진행했습니다.',
+      '실습 팀장으로 실습 중 팀원들에게 생긴 오류를 먼저 해결하고, 풀지 못한 문제만 강사님께 요청했습니다.',
       '백엔드 REST API 13개를 단독 구현하고, 인프라 팀원이 바로 연결할 수 있도록 Probe·Metrics 엔드포인트를 먼저 제공했습니다.',
       '3차에서 API를 50개로 확장하고 CI/CD·Kubernetes·Prometheus·AWS 상태를 보여주는 연동 계층을 구현했으며, 온프렘·AWS(EKS) 배포 검증에도 참여했습니다(팀 PR 55건 중 21건).',
-      '인프라 파트가 올리는 PR을 직접 리뷰·논의하며 운영에 기여했습니다.',
+      'Redis 장애 시 모니터링 요약 응답을 p95 10.3초에서 약 1초로 줄였고, 단위 테스트 104개와 WireMock 통합 테스트 22단계를 작성했습니다.',
+      '클라우드·CI/CD 구조는 팀 전체가 함께 설계했고, 전 파트의 PR 리뷰에 참여했습니다.',
     ],
     ref: 'devflow',
   },
@@ -76,7 +79,7 @@ export const experience = [
   },
   {
     period: '2025.01 ~ 2025.12 (약 1년)',
-    title: 'TEdI 코딩학원 (수내점 · 광교점)',
+    title: 'TEdI 코딩학원',
     role: 'IT 학원 강사 (프리랜서)',
     points: [
       'C, C++(정보올림피아드), Python, Java를 강의했습니다.',
@@ -88,7 +91,7 @@ export const experience = [
 export const papers = [
   {
     title: '실시간 소리 인식 및 방향 추정을 활용한 청각장애인 생활 보조 시스템 설계 및 구현',
-    venue: '한국정보기술학회',
+    venue: '한국정보기술학회 하계 종합학술대회 논문집 게재',
     year: 2026,
     note: '공동 1저자',
     ref: 'hearing-assistant',

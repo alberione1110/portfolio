@@ -122,6 +122,18 @@ export default function ProjectDetail() {
         </section>
       )}
 
+      {p.collab?.length > 0 && (
+        <section className="block">
+          <h2>협업에서 한 일</h2>
+          {p.collab.map((c) => (
+            <div key={c.title} className="ts-block">
+              <h3 className="ts-title">{c.title}</h3>
+              <p>{c.body}</p>
+            </div>
+          ))}
+        </section>
+      )}
+
       {p.extra && (
         <section className="block callout">
           <h2>{p.extra.title}</h2>

@@ -14,7 +14,7 @@ const allProjects = [
         ['문제', '첫 배포가 sts:AssumeRoleWithWebIdentity 권한 오류로 실패했습니다.'],
         ['원인', '정책을 넓히지 않고 CloudTrail에서 거절된 요청을 조회해 GitHub이 실제로 보낸 토큰의 sub 값을 확인했습니다. 신뢰 정책은 repo:<계정>/<레포> 형식을 기다렸지만 실제 토큰은 이름 뒤에 고유 ID가 붙은 형식이었습니다.'],
         ['해결', '와일드카드 대신 고유 ID 형식을 정확히 일치하도록 Terraform을 수정해 재배포에 성공했습니다.'],
-        ['배운 점', '인증 오류는 정책을 느슨하게 하지 않고 로그로 실제 값을 확인해 필요한 만큼만 고칩니다. 고유 ID 형식은 계정·레포 이름이 재사용돼도 역할을 쓸 수 없어 오히려 더 안전합니다.'],
+        ['판단 근거', '고유 ID 형식은 같은 이름의 계정이나 레포가 다시 만들어져도 이 역할을 쓸 수 없어, 와일드카드로 넓히는 것보다 안전합니다.'],
       ],
     },
     name: 'Portfolio Infra',
@@ -50,14 +50,14 @@ const allProjects = [
   {
     slug: 'devflow',
     no: 1,
-    diagrams: [{ src: '/diagrams/devflow_arch_team.png', caption: '팀 공동 아키텍처 (2차 MVP) — EKS · ALB · RDS · GitLab CI/CD · Prometheus/Grafana는 인프라 팀원 설계' },{ src: '/diagrams/devflow_flow.png', caption: '내가 구현한 백엔드 요청 흐름과 인프라 연결 지점' },{ src: '/diagrams/devflow_erd.png', caption: '데이터 모델과 권한 규칙' }],
+    diagrams: [{ src: '/diagrams/devflow_arch_team.png', caption: '팀 공동 아키텍처 (2차 MVP). EKS, ALB, RDS, GitLab CI/CD, Prometheus/Grafana는 인프라 팀원 설계' },{ src: '/diagrams/devflow_flow.png', caption: '내가 구현한 백엔드 요청 흐름과 인프라 연결 지점' },{ src: '/diagrams/devflow_erd.png', caption: '데이터 모델과 권한 규칙' }],
     name: 'DevFlow',
     summary: '프로젝트·업무 관리에 CI/CD·Kubernetes·모니터링·장애 상태 연동까지 더한 DevOps 통합 프로젝트 관리 시스템 (2차 REST API 13개 → 3차 50개)',
     period: '2026.08 (2차) · 2026.10 ~ 2026.11.13 (3차 고도화, 완료)',
     type: '멋쟁이사자처럼 부트캠프 팀 프로젝트',
     team: '4명',
-    role: '팀장 · Backend 전담',
-    stack: ['Java 21', 'Spring Boot', 'Spring Security', 'JWT', 'JPA', 'PostgreSQL', 'Flyway', 'OAuth2', 'Redis', 'Docker', 'Swagger'],
+    role: '팀장, Backend 전담',
+    stack: ['Java 21', 'Spring Boot', 'Spring Security', 'JWT', 'OAuth2', 'JPA', 'Flyway', 'PostgreSQL', 'Redis', 'AWS SDK', 'Docker', 'Helm', 'Swagger', 'WireMock', 'k6', 'Trivy'],
     links: [
       { label: '2차', url: 'https://github.com/Team-likelion-2nd-Project/likelion-devops-7th-team02' },
       { label: '3차', url: 'https://github.com/Team-likelion-3rd-Project/likelion-devops-7th-3rd-team02' },
@@ -74,62 +74,52 @@ const allProjects = [
       '(3차) GitHub · Google OAuth2 로그인, S3 첨부파일(Presigned URL), Redis 캐시',
     ],
     mine: [
-      'backend/ 전체 설계·구현 (Java 파일 전부 본인 커밋)',
+      'backend/ 설계·구현 전담 (첨부파일 스트리밍 다운로드 일부는 팀원 기여)',
       'Spring Security + JWT 필터, 전역 예외 처리와 공통 응답 포맷',
       'users · projects · project_members · tasks 모델링, 유니크 제약 설계',
       'local / dev / prod 프로필 분리, 비밀값은 환경변수로 주입',
       'Docker 멀티스테이지 빌드, Actuator로 K8s Probe·Prometheus 수집 엔드포인트 구성',
       'Postman Collection 기반 API 통합 테스트',
-      '인프라 파트가 올리는 PR을 직접 리뷰·논의해 배포 구조와 운영 방식에 기여하고, 배포 환경 요구사항을 백엔드에 반영',
-      '파트 간 API 불일치를 회의로 조율하고 설계 문서(API 명세)를 지속 갱신, 진행 상황 공유',
+      '클라우드·CI/CD 구조를 팀 전체가 함께 설계하고 전 파트 PR 리뷰에 참여, 배포 환경 요구사항을 백엔드에 반영',
+      '파트 간 API 불일치를 회의로 조율하고 API 명세와 Swagger를 계속 갱신',
       '(3차) API 13 → 50개 확장: Flyway V1~V8, 업무 검색·페이지·수정·삭제, 배포 기록·장애(Incident) API',
       '(3차) 연동 계층: GitHub Actions 파이프라인, Prometheus(Pod·Node·HPA·p95), AWS RDS·ALB 상태, Argo CD 배포 Webhook, Alertmanager 장애 Webhook·자동 해결',
       '(3차) 프로젝트별 클라우드 연결: AssumeRole + ExternalId(Access Key 저장 없음), 토큰 AES-GCM 암호화, Webhook 토큰 SHA-256 해시, SSRF 차단',
-      '(3차) 단위 테스트 104개, WireMock 통합 테스트 22단계, k6 부하 테스트 4종 + CI smoke, Trivy 조치 (Spring Boot 3.5.4 → 3.5.16, CRITICAL 10 → 6건)',
-      '(3차) 인프라 참여: AWS Helm values · IRSA 설정, 시크릿 입력, 배포 후 API 점검 스크립트(AWS 첫 실행 48개 중 46개 통과, 남은 2건은 원인과 담당을 정리해 공유), 온프렘 배포 설정 · DB 권한 · Redis 테스트',
-      '(3차) 배포 단계가 Job 단위로 묶여 실행되지 않은 배포가 성공으로 표시되던 문제를 Step 단위 배정으로 수정(#88), 이미지 게시가 멈춘 원인(워크플로 tags 키 중복)을 찾아 수정(#75)',
+      '(3차) 단위 테스트 104개, WireMock 통합 테스트 22단계, k6 시나리오 4종 작성(CI에서 smoke 실행), Trivy 조치 (Spring Boot 3.5.4 → 3.5.16, CRITICAL 10 → 6건)',
+      '(3차) 인프라·CI/CD 참여: AWS Helm values와 IRSA 설정, 시크릿 입력, GitHub Actions 워크플로 수정, 배포 후 API 점검 스크립트(AWS 첫 실행 48개 중 46개 통과, 실패 2건은 GitOps 값 수정 후 해결), 온프렘 배포 설정, DB 권한, Redis 테스트',
+      '(3차) 사전 검사 Job이 배포 성공으로 보이던 파이프라인 단계 배정을 Step 단위로 수정(#88), 이미지 게시가 멈춘 원인(워크플로 tags 키 중복)을 찾아 수정(#75)',
     ],
     teamWork: [
       'Frontend: React UI, 파이프라인·배포·장애·클라우드 연결 화면',
       'AWS: Terraform(VPC · EKS · RDS Multi-AZ · CloudFront+S3), Helm + Argo CD GitOps, ExternalDNS · ACM',
       '온프렘: kubeadm 3노드 VM 클러스터, Tailscale, 백업·복구',
-      'CI/CD · Monitoring: GitHub Actions · 이미지 게시, Prometheus · Grafana · Alertmanager',
+      'CI/CD · Monitoring: GitHub Actions · 이미지 게시, Prometheus · Grafana · Alertmanager (클라우드·CI/CD 구조는 팀 공동 설계)',
     ],
     metrics: {
       caption: '3차 고도화 결과 (2026.10.05 ~ 11.13) · 머지 PR은 팀 전체 55건 중 본인 21건',
       items: [
         { label: 'API (2차 13개에서 확장)', value: '50개' },
-        { label: '머지 PR (팀 전체 55건)', value: '21건' },
         { label: '단위 테스트 + 통합 22단계', value: '104개' },
+        { label: 'Redis 장애 시 응답 p95 (기존 10.3초)', value: '1초' },
         { label: 'AWS 배포 후 API 점검', value: '46/48' },
       ],
     },
     extra: {
       title: '3차 고도화 (2026.10.05 ~ 2026.11.13, 완료)',
-      body: '목표는 "DevFlow 안에서 DevOps 상태가 보이는 것"이었습니다. 업무 화면에서 CI/CD · Kubernetes · 모니터링 · 장애 상태를 함께 보도록 확장하고, 온프렘(kubeadm)과 AWS(EKS) 두 환경에 배포했습니다. 역할은 팀장 · Backend를 유지하며 백엔드 연동 계층을 설계·구현하고 배포 설정과 검증에 직접 참여했습니다. 팀 결과로 온프렘에서 낸 장애를 AWS의 DevFlow가 감지하기까지 5분 39초를 검증했고 백업·복구 검증과 devflowlab.net 운영까지 마쳤습니다. 2026.11.13 최종 발표(녹화 시연)로 마무리했습니다.',
+      body: '업무 화면에서 CI/CD, Kubernetes, 모니터링, 장애 상태를 함께 보도록 DevFlow를 확장하고, 온프렘(kubeadm)과 AWS(EKS) 두 환경에 배포했습니다. 저는 팀장과 Backend를 유지하며 백엔드 연동 계층을 설계하고 구현했고, 배포 설정과 검증에 참여했습니다. 팀 결과로 온프렘 장애 주입부터 AWS DevFlow의 장애 생성과 복구 확인까지 5분 39초, EKS HPA 확장·축소(2 → 4 → 2), 백업과 복구를 검증했습니다. devflowlab.net으로 2026.11.13 최종 발표(녹화 시연)를 마쳤고, 현재 AWS 환경은 종료했습니다.',
     },
   },
   {
     slug: 'hearing-assistant',
     no: 2,
-    diagrams: [{ src: '/diagrams/hearing_pipeline.png', caption: '엣지 AI 파이프라인(Raspberry Pi)과 클라우드 백엔드 분리' }],
-    troubleshooting: {
-      title: '추론 루프가 연결 처리를 막던 문제',
-      diagram: { src: '/diagrams/hearing_ts.png', caption: '추론/연결 처리 분리 전후' },
-      rows: [
-        ['문제', '단일 스크립트로 검증한 추론 코드를 WebSocket 서버로 감싸자, 추론 루프가 서버와 같은 흐름에서 돌아 앱의 시작·중지 요청과 결과 전송이 막혔습니다.'],
-        ['원인', 'CPU를 쓰는 추론이 이벤트 루프를 점유했습니다.'],
-        ['해결', '추론을 별도 스레드로 분리하고 결과를 큐로 전달했습니다. 라즈베리파이 자원 한도에 맞춰 서버와 모델을 경량화했습니다.'],
-        ['배운 점', '엣지에서는 기능 추가보다 경량화·안정성이 먼저이고, 실시간 처리(엣지)와 데이터 저장(클라우드)은 서비스 단위로 나눠야 합니다.'],
-      ],
-    },
+    diagrams: [{ src: '/diagrams/hearing_pipeline.png', caption: '엣지 AI 파이프라인(Raspberry Pi 5)과 클라우드 백엔드 분리' }],
     name: 'Hearing Assistant',
     summary: '소리의 종류와 방향을 실시간으로 판별해 알려주는 청각장애인 생활 보조 시스템',
     period: '2026.03 ~ 2026.06',
     type: '심화 캡스톤디자인',
-    team: '5명',
-    role: '팀장 · 서버 구조 설계 · 배포 · 엣지 AI 서버',
-    stack: ['Python', 'FastAPI', 'PostgreSQL', 'Alembic', 'Docker Compose', 'WebSocket', 'PyTorch', 'Raspberry Pi'],
+    team: '6명',
+    role: '팀장, 서버 구조 설계와 배포, 엣지 AI 서버',
+    stack: ['Python', 'FastAPI', 'WebSocket', 'Docker Compose', 'Render', 'PyTorch', 'Wav2Vec2', 'GCC-PHAT', 'Raspberry Pi 5'],
     links: [
       { label: '백엔드', url: 'https://github.com/alberione1110/hearing-assistant' },
       { label: 'AI 서버', url: 'https://github.com/alberione1110/deafassist_ai_server' },
@@ -138,7 +128,7 @@ const allProjects = [
       '주변의 위험 소리를 놓치기 쉬운 청각장애인을 위해, 엣지 디바이스가 소리를 분류하고 방향을 추정해 모바일·AR 글래스·워치로 알려줍니다.',
     flow: ['ReSpeaker 4-Mic', 'KWS 소리 분류', 'GCC-PHAT 방향 추정', 'WebSocket', '모바일 앱', 'FastAPI + PostgreSQL'],
     features: [
-      '8종 소리 분류(KWS)와 마이크 4쌍 GCC-PHAT 기반 8방향 추정',
+      '8종 소리 분류(Wav2Vec2 KWS), 키워드로 판정된 소리만 마이크 6쌍 GCC-PHAT로 8방향 추정',
       'WebSocket으로 추론 결과를 앱에 실시간 전송 (start / stop 제어)',
       'JWT 인증, 방향 감지 이력 저장·조회 (페이지네이션, 방향·날짜 필터)',
       '사용자 설정: 자막 글자 크기, 워치 진동 패턴, AR 글래스 자동 전환',
@@ -147,21 +137,20 @@ const allProjects = [
       '팀장: PR 기반 협업 운영, PR 28건 리뷰·머지',
       '백엔드 / AI 서비스 모노레포 골격 설계 후 AI 서버를 엣지 레포로 분리',
       'Dockerfile · Docker Compose 로컬 환경, Render Blueprint로 웹 서비스 + PostgreSQL 배포',
-      '마이크 스트림 → KWS → GCC-PHAT → WebSocket 추론 파이프라인 구현',
+      '16kHz 오디오를 0.1초 단위로 받아 1초 윈도우로 KWS 추론 → 키워드일 때만 GCC-PHAT 방향 추정 → WebSocket 전송 파이프라인 구현',
       '추론은 별도 스레드, 결과는 Queue로 넘겨 이벤트 루프가 막히지 않게 구성',
-      'Windows에서 개발한 코드를 그대로 라즈베리파이에 배포해 엣지에서 실행',
-      '실시간성이 필요한 소리는 백엔드를 거치지 않고 라즈베리파이 로컬 서버에서 프론트와 WebSocket으로 직접 통신, 로그만 API로 백엔드에 송신',
-      '파트 사이의 중간 다리 역할: 회의 내용을 각 파트에 연결하고 API·이벤트 규격 문서를 고도화',
-      'Keyword Spotting 모델 파인튜닝 (팀원과 공동)',
+      'REST polling의 반복 요청 지연을 피해 실시간 소리는 라즈베리파이 로컬 서버가 앱과 WebSocket으로 직접 통신, 기록만 API로 백엔드에 송신',
+      '파트 간 JSON 이벤트 규격 조율, 마이크 채널이 누락되면 빠진 방향에 0을 넣어 API 형식 유지',
+      'Wav2Vec2 기반 KWS 모델 파인튜닝 (팀원과 공동)',
     ],
     teamWork: [
-      '백엔드 API: JWT 인증, 방향 이력·설정 API, Alembic 마이그레이션',
-      '모바일 앱, AR 글래스 클라이언트',
+      '백엔드 API: JWT 인증, 감지 이력·설정 API, PostgreSQL, Alembic 마이그레이션',
+      '모바일 앱(React Native, Expo), AR 글래스·워치 클라이언트',
     ],
     metrics: null,
     extra: {
       title: '논문',
-      body: '「실시간 소리 인식 및 방향 추정을 활용한 청각장애인 생활 보조 시스템 설계 및 구현」, 한국정보기술학회, 2026 (공동 1저자)',
+      body: '「실시간 소리 인식 및 방향 추정을 활용한 청각장애인 생활 보조 시스템 설계 및 구현」, 한국정보기술학회 하계 종합학술대회 논문집 게재, 2026.06 (공동 1저자)',
     },
   },
   {
@@ -173,11 +162,11 @@ const allProjects = [
     period: '2025.06 ~ 2025.08',
     type: 'KSEB 부트캠프',
     team: '4명',
-    role: '팀장 · 풀스택 (Frontend + Backend)',
+    role: '팀장, 풀스택 (Frontend와 Backend)',
     stack: ['React', 'Axios', 'ECharts', 'Flask', 'Python', 'MySQL'],
     links: [{ label: 'GitHub', url: 'https://github.com/alberione1110/KSEB_Proj' }],
     problem:
-      '예비 창업자가 지역을 고르면 유망 업종을, 업종을 고르면 지역 인구 분포와 시장 발전 가능성을 종합적으로 고려한 유망 지역(동)을 추천받고, 동일 업종 매출 데이터와 지역 인구 지표를 차트 리포트와 AI 상담으로 확인합니다.',
+      '예비 창업자가 지역을 고르면 유망 업종을, 업종을 고르면 인구 분포와 상권 성장 가능성을 바탕으로 유망 지역(동)을 추천하는 웹 서비스입니다. 같은 업종의 매출 데이터와 지역 인구 지표는 차트 리포트와 AI 상담으로 보여줍니다.',
     flow: ['React', 'REST /api', 'Flask Blueprint', 'AI 모듈 (팀원)', 'MySQL'],
     features: [
       '지역 → 업종 추천, 업종 → 지역(동) 추천',
@@ -189,7 +178,7 @@ const allProjects = [
       'ECharts 차트 구현, Axios로 API 연동',
       'Flask Blueprint 기반 API 4종, CORS · 공통 에러 처리 · 헬스 체크',
       '프론트 – 백엔드 – AI 모듈 통합과 저장소 관리',
-      '팀장으로서 AI 파트가 막힌 학습·데이터 문제에 논문 기반 RAG LLM 활용을 제안',
+      '팀장으로서 AI 파트가 막힌 학습·데이터 문제에 논문을 근거로 RAG LLM 활용을 제안 (챗봇 구현은 팀원)',
     ],
     teamWork: ['업종·입지 추천 알고리즘, 추천 이유 생성, 리포트 생성', 'RAG 기반 상담 챗봇'],
     metrics: null,
@@ -202,26 +191,26 @@ const allProjects = [
     name: 'VisGAP',
     summary: 'YOLOv8 기반 스마트폰 후면 카메라 미세 부품 간격(gap) 자동 측정 · 논문 제1저자',
     period: '2025.03 ~ 2025.06',
-    type: '기초 캡스톤디자인 (기업 연계)',
-    team: '5명',
-    role: '팀장 · AI',
-    stack: ['YOLOv8', 'PyTorch', 'OpenCV', 'FastAPI', 'React', 'Vite'],
+    type: '기초 캡스톤디자인 (산학협력 기업 아이엠)',
+    team: '6명',
+    role: '팀장, AI',
+    stack: ['YOLOv8m', 'PyTorch', 'OpenCV', 'NumPy', 'Roboflow', 'FastAPI', 'React', 'Vite'],
     links: [{ label: 'GitHub', url: 'https://github.com/alberione1110/VisGAP' }],
     problem:
-      '사람이 눈으로 확인하던 부품 간격 검사를, 이미지를 올리면 frame · magnetic · gap을 검출하고 gap 높이(px)를 자동으로 측정하도록 바꿨습니다.',
+      '사람이 눈으로 확인하던 부품 간격 검사를, 이미지를 올리면 frame, magnetic, gap을 객체 검출하고 gap 높이(px)를 자동으로 측정하도록 바꿨습니다. 학습 데이터는 협력 기업 아이엠(IAM)에서 제공받았습니다.',
     flow: ['React', 'FastAPI 업로드 API', 'YOLOv8m 검출', 'OpenCV 후처리', '결과 이미지 · gap 값'],
     features: [
-      'frame · magnetic · gap 3개 클래스 검출',
+      'frame, magnetic, gap 3개 클래스 객체 검출, frame과 magnetic은 검출 박스 영역에 반투명 색을 입혀 표시',
       'gap 박스 높이를 px 단위로 측정해 표시',
-      '단일 이미지는 결과와 gap 값, 다중 이미지는 ZIP으로 반환',
+      '단일 이미지는 결과와 gap 값, 다중 이미지는 결과 이미지와 GAP 로그를 ZIP으로 반환',
     ],
     mine: [
       '고전 영상처리(RMBG, OTSU, Contour) 실험 후 YOLO 기반 검출로 방향 결정',
-      'Roboflow로 데이터셋 구축, 라벨링 클래스 정의 (train 140 / valid 39 / test 21)',
-      'YOLOv8m 학습·재학습과 최종 모델 선정',
+      'Roboflow로 데이터셋 구축, 라벨링 클래스 정의 (총 200장: train 140 / valid 39 / test 21)',
+      'YOLOv8m 학습·재학습(imgsz 1024, conf 0.1, IoU 0.3)과 최종 모델 선정, MacBook CPU와 Windows GPU에서 속도·메모리 비교',
       '추론과 gap 측정 로직, AI 추론 서버 구현',
     ],
-    teamWork: ['프론트엔드: 업로드·설명·결과 페이지', '백엔드: 업로드 API, 프론트–백–AI 연동'],
+    teamWork: ['프론트엔드 2명: 업로드·설명·결과 페이지', '백엔드 1명: 업로드 API(단일·다중), 결과 이미지 저장'],
     metrics: {
       caption: '최종 모델(best.pt, epoch 26) · 검증셋 39장 기준',
       items: [
@@ -311,83 +300,62 @@ const allProjects = [
 
 
 const ts = {
-  devflow: [{
-    title: '파트 간 API 불일치 (팀 협업)',
-    rows: [
-      ['문제', '회원가입 API에서 개인 정보 데이터의 형식(전화번호 하이픈 포함 여부, 생년월일 날짜 형식)이 프론트엔드가 보내는 값과 백엔드가 기대하는 값 사이에 맞지 않았습니다.'],
-      ['원인', '각 파트가 API 명세를 각자 해석해 구현했고, 변경 사항이 팀 전체에 즉시 공유되는 구조가 아니었습니다.'],
-      ['해결', '회의를 열어 어느 쪽 기준에 맞출지 먼저 합의하고 그 결과를 설계 문서(API 명세)에 바로 반영했습니다. 이후에도 이슈가 생길 때마다 문서를 갱신하고 Swagger로 코드와 문서를 일치시키며 변경 사항과 남은 이슈를 팀에 계속 공유했습니다.'],
-      ['배운 점', '통합 시점에 한꺼번에 맞추기보다 문서를 기준으로 작은 단위로 일찍 맞추는 방식이 효과적입니다. 인프라 담당과도 API 명세·배포 구조를 정기 리뷰하며 Probe·Metrics를 백엔드에서 먼저 준비했고, 2차에서 직접 다루지 못한 인프라 경험은 P6와 3차의 배포 검증 참여로 이어졌습니다.'],
-    ],
-  },
-  {
-    title: 'Redis 장애 시 모니터링 요약 10초 지연 (3차, #44 · #47)',
-    rows: [
-      ['문제', 'Redis가 내려가면 모니터링 요약 API 응답이 약 10.3초까지 늘어나 대시보드 전체가 느려졌습니다.'],
-      ['원인', '캐시 조회마다 Redis 연결 타임아웃을 기다린 뒤에야 원본(Prometheus · GitHub)을 조회하는 구조였습니다.'],
-      ['해결', 'Redis 실패를 감지하면 캐시를 우회하고 30초 메모리 캐시로 대체했습니다. 동시 요청에서도 우회 전환과 WARN 로그가 한 번만 일어나도록 고쳐 응답이 약 1초가 되었습니다.'],
-      ['배운 점', '외부 연동이 많은 서비스일수록 캐시 같은 보조 구성요소의 장애가 본 기능을 막지 않게 격리해야 합니다. 장애를 일부러 내서 확인하는 테스트를 통합 테스트에 포함했습니다.'],
-    ],
-  }],
+  devflow: [
+    {
+      title: '사전 검사 Job이 배포 성공으로 보이던 문제 (3차, #88)',
+      rows: [
+        ['문제', 'DevFlow 파이프라인 화면에서 실제로 실행되지 않은 배포 단계가 성공으로 표시되었습니다.'],
+        ['원인', 'Job 이름의 키워드로 단계를 나눠 한 Job이 여러 단계에 반영되었고, 사전 검사 Job(Verify branch and deployment settings)이 "deployment"에 걸려 DEPLOY 성공으로 표시되었습니다.'],
+        ['해결', 'Step 정보가 있으면 Step 이름으로 단계를 배정하고 키워드는 단어 단위로 비교(deployment ≠ deploy)하도록 고쳤습니다. 실제 Frontend 배포 실행 기준 BUILD 성공, VERIFY 성공, DEPLOY 실패로 정확히 표시됩니다.'],
+      ],
+    },
+    {
+      title: 'Redis 장애 시 모니터링 요약 10초 지연 (3차, #44 · #47)',
+      rows: [
+        ['문제', 'Redis가 내려가면 모니터링 요약 API 응답이 p95 약 10.3초까지 늘어나 대시보드 전체가 느려졌습니다.'],
+        ['원인', '캐시 조회마다 Redis 연결 타임아웃을 기다린 뒤에야 원본(Prometheus, GitHub)을 조회하는 구조였습니다.'],
+        ['해결', 'Redis 실패를 감지하면 캐시를 우회하고 30초 메모리 캐시로 대체했습니다. 동시 요청에서도 우회 전환과 WARN 로그가 한 번만 일어나도록 고쳐 p95가 약 1초(전환 직후), 반복 요청 시 약 0.4초가 되었습니다.'],
+        ['검증', 'Redis를 일부러 내리는 장애 주입 테스트를 통합 테스트에 넣어 같은 문제가 다시 생기지 않는지 확인합니다.'],
+      ],
+    },
+  ],
   'hearing-assistant': [
     {
-      title: '① 다채널 마이크 입력 편차와 파트 간 통신 (팀 협업)',
+      title: '방향이 결과에 반영되지 않던 도달 시점 추정',
       rows: [
-        ['문제', '다채널 마이크가 항상 4개 채널로 소리를 받는 것이 아니라, 소리가 한쪽으로 치우치면 3개 채널만 들어오는 경우가 있어 입력 형태가 일정하지 않았습니다. 이 때문에 프론트엔드와 주고받는 데이터에서 문제가 발생했습니다.'],
-        ['원인', '입력 채널 수가 달라질 수 있다는 조건이 파트 간 명세에 반영되어 있지 않았습니다.'],
-        ['해결', '팀장으로서 파트 사이의 중간 다리가 되어 회의 내용을 각 파트에 연결하고 적극적으로 소통했습니다. 채널 수 변동 같은 예외 조건을 포함하도록 설계 문서를 고도화했습니다.'],
-        ['배운 점', '입력이 이상적이지 않은 센서·엣지 환경에서는 예외 조건을 문서에 먼저 명시해야 파트 간 오해가 줄어듭니다.'],
+        ['문제', '처음에는 채널마다 진폭이 임계값을 처음 넘는 시점을 도달 시점으로 잡았지만, 채널 간 시점 차이가 거의 나지 않아 방향이 결과에 잘 반영되지 않았습니다.'],
+        ['원인', '소형 4채널 마이크 배열이라 마이크 간격이 좁아 채널 간 시간차가 매우 작고, 임계값 방식은 잡음에도 흔들렸습니다.'],
+        ['해결', '논문 시점에는 시간차를 입력으로 방향 클래스를 내는 MLP로 보정했습니다. 최종 코드에서는 더 단순하게 구현할 수 있는 GCC-PHAT로 교체해, 마이크 6쌍의 상호상관으로 시간차를 구하고 8방향으로 변환합니다.'],
       ],
     },
     {
-      title: '② 실시간 소리 전달 지연 (구조 설계)',
+      title: '실시간 소리 전달 경로 설계',
       rows: [
-        ['문제', '로그 송신은 API로 충분했지만, 소리처럼 즉시 받아야 하는 데이터를 백엔드 서버를 거쳐 전달하면 지연이 커질 수 있었습니다.'],
-        ['원인', '마이크 → 백엔드 → 프론트로 이어지는 경로가 실시간 처리에 불리한 구조였습니다.'],
-        ['해결', '백엔드를 거치지 않고 라즈베리파이에 경량화한 AI 모델과 자동화 알고리즘을 올려 자체 로컬 서버를 구성했습니다. 프론트와 WebSocket으로 직접 통신해 실시간으로 처리하고, 로그는 기존대로 API로 백엔드에 송신했습니다.'],
-        ['배운 점', '데이터 성격에 따라 경로를 나눕니다. 실시간성이 필요한 것은 엣지에서 직접, 기록·저장은 API와 클라우드로 처리합니다.'],
+        ['문제', '소리 이벤트는 바로 전달돼야 하는데, 백엔드 서버를 거치거나 REST polling으로 받으면 반복 요청 때문에 지연이 생겼습니다.'],
+        ['원인', '마이크 → 백엔드 → 앱으로 이어지는 경로와 요청을 반복하는 polling 방식 모두 실시간 전달에 불리한 구조였습니다.'],
+        ['해결', '백엔드를 거치지 않도록 라즈베리파이에 경량화한 KWS 모델과 방향 추정 로직을 올려 로컬 서버를 구성했습니다. 앱과 WebSocket으로 직접 통신하고, 기록은 기존대로 API로 백엔드에 송신합니다.'],
       ],
     },
     {
-      title: '③ 추론 루프가 연결 처리를 막던 문제',
+      title: '추론 루프가 연결 처리를 막던 문제',
       diagram: { src: '/diagrams/hearing_ts.png', caption: '추론/연결 처리 분리 전후' },
       rows: [
         ['문제', '단일 스크립트로 검증한 추론 코드를 WebSocket 서버로 감싸자, 추론 루프가 서버와 같은 흐름에서 돌아 앱의 시작·중지 요청과 결과 전송이 막혔습니다.'],
         ['원인', 'CPU를 쓰는 추론이 이벤트 루프를 점유했습니다.'],
         ['해결', '추론을 별도 스레드로 분리하고 결과를 큐로 전달했습니다. 라즈베리파이 자원 한도에 맞춰 서버와 모델을 경량화했습니다.'],
-        ['배운 점', '엣지에서는 기능 추가보다 경량화·안정성이 먼저이고, 실시간 처리(엣지)와 데이터 저장(클라우드)은 서비스 단위로 나눠야 합니다.'],
       ],
     },
   ],
   visgap: [{
-    title: '참여가 어려운 AI 파트 팀원 (팀 협업)',
+    title: '적은 데이터로 낮았던 초기 모델 성능',
     rows: [
-      ['문제', '같은 AI 파트 팀원이 프로젝트에 거의 참여하지 못하고 관련 지식도 부족해, 혼자 해결하기 어려운 문제가 발생했습니다.'],
-      ['원인', '팀원의 경험·지식 격차와, 맡을 수 있는 구체적인 역할이 정해지지 않은 상태였습니다.'],
-      ['해결', '소외된 팀원을 그냥 두지 않고, 사소한 내용이라도 설명해 주고 자료 조사처럼 할 수 있는 임무를 구체적으로 부여했습니다. 맡은 일이 있으니 참여가 이어졌고 팀원 간 분쟁도 생기지 않았습니다.'],
-      ['배운 점', '참여가 적은 팀원은 탓하기보다 수준에 맞는 역할을 만들어 주는 것이 팀 전체의 결과와 분위기를 지킵니다.'],
-    ],
-  }],
-  kseb: [{
-    title: '학습 난이도와 폐쇄적인 상권 데이터 (팀 협업)',
-    rows: [
-      ['문제', 'AI 파트 팀원들이 AI 모델 학습 문제를 어려워했고, 상권 데이터는 폐쇄적이라 학생 신분으로 확보하기 어려운 것이 많았습니다.'],
-      ['원인', '모델을 직접 학습시키기에는 확보 가능한 데이터가 제한적이었습니다.'],
-      ['해결', '팀장으로서 풀스택 담당이었지만 해결책을 제안했습니다. 여러 논문을 근거로 RAG 방식의 LLM을 활용해, 학습 데이터에 의존하지 않고 AI 상담을 구현하는 방향으로 전환했습니다.'],
-      ['배운 점', '데이터 품질과 확보 가능성이 결과의 신뢰도를 좌우합니다. 담당 파트 밖의 문제도 논문·사례 조사로 방향을 제시할 수 있고, 설계 단계부터 데이터 정합성을 검증하는 습관이 생겼습니다.'],
-    ],
-  }],
-  reconnect: [{
-    title: '백엔드·AI 간 연동 문제 사전 점검 (팀 협업)',
-    rows: [
-      ['문제', '큰 장애는 없었지만, 앱·웹이 같은 REST API를 공유하는 구조라 백엔드와 AI 사이에서 연동 문제가 생길 가능성이 있었습니다.'],
-      ['원인', '백엔드와 AI 파트가 각자 개발해 API 연동 지점이 늦게 드러날 수 있었습니다.'],
-      ['해결', '프론트 담당이면서 백엔드·AI를 모두 이해하는 팀원으로서, 두 파트 사이에서 발생할 수 있는 문제를 체크리스트로 만들어 제공했습니다. 이 체크리스트가 실제로 발견하지 못했던 API 연동성 문제를 찾아 해결하는 데 도움이 되었습니다.'],
-      ['배운 점', '역할이 프론트엔드여도 인접 파트의 지식이 있으면 통합 단계의 문제를 예방할 수 있습니다.'],
+      ['문제', '첫 학습 모델의 검출 성능이 낮아 gap 위치를 안정적으로 잡지 못했습니다.'],
+      ['원인', '학습 이미지가 200장뿐이고, 이미지 해상도와 라벨 품질이 고르지 않았습니다.'],
+      ['해결', '입력 해상도를 1024로 올리고 conf 0.1, IoU 0.3, epoch를 바꿔 가며 반복 실험했습니다. 최종 모델은 검증셋 기준 mAP50 0.980, Recall 0.920입니다. 검증셋이 작아 현장 일반화는 따로 검증해야 한다고 판단했습니다.'],
     ],
   }],
   rsna: [{
-    title: '주제 전환 — 암호화 상태에서 학습이 되지 않던 문제',
+    title: '주제 전환: 암호화 상태에서 학습이 되지 않던 문제',
     rows: [
       ['처음 목표', '민감한 의료 이미지를 암호화해, 전송 중 탈취되어도 비밀키 없이는 구분하기 어렵게 하고 암호화된 상태에서 그대로 학습시키는 것.'],
       ['부딪힌 문제', '이미지를 암호화하면 원본 내용이 훼손되어 모델이 전혀 학습되지 않았습니다.'],
@@ -397,7 +365,31 @@ const ts = {
   }],
 }
 
-const withTs = allProjects.map((p) => ({ ...p, troubleshootings: ts[p.slug] ?? (p.troubleshooting ? [p.troubleshooting] : []) }))
+// 협업에서 한 일 (트러블슈팅과 분리)
+const collab = {
+  devflow: [{
+    title: 'API 명세를 기준으로 파트 맞추기',
+    body: '2차 통합 중 회원가입 API에서 전화번호의 하이픈 포함 여부와 생년월일 형식이 프론트엔드와 백엔드 사이에 서로 달랐습니다. 각 파트가 명세를 따로 해석한 것이 원인이었습니다. 회의에서 기준을 먼저 정해 API 명세와 Swagger에 바로 반영했고, 이후 변경 사항도 같은 문서로 공유했습니다. 인프라 담당과도 명세와 배포 구조를 함께 검토하면서 Probe와 메트릭 엔드포인트를 미리 준비했습니다.',
+  }],
+  'hearing-assistant': [{
+    title: '마이크 채널 누락을 API 형식에 반영',
+    body: '4채널 마이크였지만, 한쪽 채널의 소리가 지나치게 약하면 그 채널이 0으로 오지 않고 아예 빠진 채 3개 채널만 전달됐습니다. 이 경우가 파트 간 명세에 없어 앱과 주고받는 데이터에서 문제가 났습니다. 팀장으로서 파트별 회의 내용을 서로 전달하고, API 형식을 채널 수에 맞게 유동적으로 바꿨습니다. 3개 채널만 들어오면 빠진 방향에 0을 넣어 앱이 항상 같은 형태로 받도록 했고, 이 예외 조건을 설계 문서에도 추가했습니다.',
+  }],
+  visgap: [{
+    title: '참여가 어려운 팀원에게 맡을 일 만들기',
+    body: 'AI 파트는 3명이었지만 다른 두 팀원이 프로젝트에 거의 참여하지 못했고 관련 지식도 부족했습니다. 맡을 일이 정해지지 않은 것이 더 큰 문제라고 보고, 필요한 내용을 하나씩 설명하면서 자료 조사처럼 할 수 있는 일을 구체적으로 나눠 맡겼습니다. 맡은 일이 생기자 참여가 이어졌고 팀 안에서 갈등 없이 마무리했습니다.',
+  }],
+  kseb: [{
+    title: '학습 데이터가 부족할 때 RAG 도입 제안',
+    body: 'AI 파트 팀원들이 모델 학습을 어려워했고, 상권 데이터는 공개된 것이 적어 학생 신분으로 확보하기 어려웠습니다. 저는 풀스택 담당이었지만 관련 논문을 찾아, 학습 데이터에 덜 의존하는 RAG 기반 LLM 상담으로 방향을 바꾸자고 제안했습니다. 챗봇 구현은 팀원이 맡았고, 저는 완성된 모듈을 Flask API에 통합했습니다.',
+  }],
+  reconnect: [{
+    title: '백엔드와 AI 사이 연동 체크리스트',
+    body: '앱과 웹이 같은 REST API를 쓰는 구조여서, 백엔드와 AI 파트가 따로 개발하면 연동 문제가 통합 직전에야 드러날 수 있었습니다. 두 파트 사이에서 확인할 항목을 체크리스트로 만들어 공유했고, 이 체크리스트로 실제 연동 문제를 찾아 해결했습니다.',
+  }],
+}
+
+const withTs = allProjects.map((p) => ({ ...p, troubleshootings: ts[p.slug] ?? (p.troubleshooting ? [p.troubleshooting] : []), collab: collab[p.slug] ?? [] }))
 export const projects = withTs.filter((p) => !p.research).sort((a, b) => a.no - b.no)
 export const research = withTs.filter((p) => p.research)
 export const getProject = (slug) => withTs.find((p) => p.slug === slug)
