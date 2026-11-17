@@ -87,7 +87,7 @@ const allProjects = [
       '(3차) 프로젝트별 클라우드 연결: AssumeRole + ExternalId(Access Key 저장 없음), 토큰 AES-GCM 암호화, Webhook 토큰 SHA-256 해시, SSRF 차단',
       '(3차) 조회 패턴에 맞춘 복합 인덱스 설계(Flyway V2): 내 프로젝트 목록과 업무 정렬·필터에 맞춰 (project_id, updated_at), (project_id, status), (project_id, assignee_id) 등 추가. PostgreSQL은 FK 컬럼에 인덱스를 자동으로 만들지 않는 점을 고려',
       '(3차) 중복 방지와 멱등 처리: 같은 Alertmanager 알림은 해결 전까지 장애 하나만 생기도록 부분 유니크 인덱스(status <> RESOLVED) 적용, 배포 Webhook은 (project_id, pipeline_id, service) 유니크 제약과 재전송 비교로 같은 배포가 두 번 기록되지 않게 처리',
-      '(3차) 단위 테스트 104개, WireMock 통합 테스트 22단계, k6 시나리오 4종 작성(CI에서 smoke 실행), Trivy 조치 (Spring Boot 3.5.4 → 3.5.16, CRITICAL 10 → 6건)',
+      '(3차) 단위 테스트 104개, WireMock 통합 테스트 22단계, Trivy 조치 (Spring Boot 3.5.4 → 3.5.16, CRITICAL 10 → 6건), k6 시나리오 4종 작성(CI에서 smoke 실행). 로컬 Docker Compose 실측: load(20 VU) 12,181건, spike(50 VU) 10,355건 요청 모두 실패 0건, p95 약 12ms, 9ms (개인 PC, 메모리 캐시, 소량 데이터 기준)',
       '(3차) 인프라·CI/CD 참여: AWS Helm values와 IRSA 설정, 시크릿 입력, GitHub Actions 워크플로 수정, 배포 후 API 점검 스크립트(AWS 첫 실행 48개 중 46개 통과, 실패 2건은 GitOps 값 수정 후 해결), 온프렘 배포 설정, DB 권한, Redis 테스트',
       '(3차) 사전 검사 Job이 배포 성공으로 보이던 파이프라인 단계 배정을 Step 단위로 수정(#88), 이미지 게시가 멈춘 원인(워크플로 tags 키 중복)을 찾아 수정(#75)',
     ],
